@@ -1,0 +1,27 @@
+h1{
+    text-align: center;
+}
+
+h3{
+    text-align: center;
+}
+
+img {
+    width: 500px;
+    height: 550;
+    margin-left: 350px;
+    border: 1px solid black;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.head{
+    margin-left: 40px;
+    margin-bottom: 60px;
+}
+
+
+.contact{
+    margin-left: 40px;
+    margin-top: 40px;
+}
