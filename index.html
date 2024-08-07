@@ -6,6 +6,7 @@
     <title>Support Url</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
     <h1>Support Pages</h1>
@@ -37,43 +38,14 @@
         <a href="mailto:qtax1@yahoo.com">by Email</a>
       </p>
     </div>
-    <p id="local-ip">Local IP Address:</p>
+    <p id="gfg"></p>
     <script>
-      function getLocalIpAddress() {
-        return new Promise((resolve, reject) => {
-          const rtc = new RTCPeerConnection({ iceServers: [] });
-          rtc.createDataChannel("");
-          rtc.createOffer().then((offer) => rtc.setLocalDescription(offer));
-          rtc.onicecandidate = (event) => {
-            if (event.candidate) {
-              const ip = /([0-9]{1,3}\.){3}[0-9]{1,3}/.exec(
-                event.candidate.candidate
-              );
-              if (ip) {
-                resolve(ip[0]);
-                rtc.onicecandidate = () => {}; // Stop after first IP
-              }
-            }
-          };
-          setTimeout(() => reject("No IP address found"), 2000); // Timeout in case no IP is found
+      $(document).ready(() => {
+        $.getJSON("https://api.ipify.org?format=json", function (data) {
+          // Displayin IP address on screen
+          $("#gfg").html(data.ip);
         });
-      }
-
-      async function displayIp() {
-        try {
-          let ip = await getLocalIpAddress();
-          document.getElementById(
-            "local-ip"
-          ).innerText = `Local IP Address: ${ip}`;
-        } catch (error) {
-          console.error("Error getting local IP address:", error);
-          document.getElementById("local-ip").innerText =
-            "Local IP Address: Not available";
-        }
-      }
-
-      document.addEventListener("DOMContentLoaded", displayIp);
-
+      });
       $(document).ready(function () {
         navigator.geolocation.getCurrentPosition((position) => {
           let lat = position.coords.latitude;
