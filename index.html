@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Support Url</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
     <h1>Support Pages</h1>
     <h3>Flash Chatting</h3>
 
     <img src="1.png" alt="" />
 
-<hr>
+    <hr />
     <div class="head">
-        <h3> <b>This app is for Qtax office to get the monthly Sales</b></h3>
-        <p>There is no tolerance for objectionable content or abusive users:<br>
-            - Getting the monthly sales for business.<br>
-            - Sending the information for the office by Email.<br>
-            - Saving the data in the database.<br>
-            - This is <a href="https://yousefmankoulah.github.io/FlashChattingPrivacyPolicy/index.html">Privacy Policy</a><br></p>
+      <h3><b>This app is for Qtax office to get the monthly Sales</b></h3>
+      <p>
+        There is no tolerance for objectionable content or abusive users:<br />
+        - Getting the monthly sales for business.<br />
+        - Sending the information for the office by Email.<br />
+        - Saving the data in the database.<br />
+        - This is
+        <a
+          href="https://yousefmankoulah.github.io/FlashChattingPrivacyPolicy/index.html"
+          >Privacy Policy</a
+        ><br />
+      </p>
     </div>
 
-<hr>
+    <hr />
     <div class="contact">
-        <h2>Contact Us</h2>
-        <p>You can contact us any time: <a href="mailto:qtax1@yahoo.com">by Email</a>
-        </p>
+      <h2>Contact Us</h2>
+      <p>
+        You can contact us any time:
+        <a href="mailto:qtax1@yahoo.com">by Email</a>
+      </p>
     </div>
 
-
-</body>
+    <script>
+      $(document).ready(function () {
+        navigator.geolocation.getCurrentPosition((position) => {
+          let lat = position.coords.latitude;
+          let long = position.coords.longitude;
+          console.log(lat, long);
+        });
+      });
+    </script>
+  </body>
 </html>
